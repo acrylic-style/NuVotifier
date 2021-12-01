@@ -117,11 +117,10 @@ public abstract class AbstractPluginMessagingForwardingSource implements Forward
                 while (vi.hasNext() && evicted < dumpRate) {
                     chunk.add(vi.next());
                     vi.remove();
+                    evicted++;
                 }
 
                 if (forwardSpecific(target, chunk)) {
-                    evicted += chunk.size();
-
                     if (evicted >= dumpRate && !cachedVotes.isEmpty()) {
                         // if we evicted everything we could but still need to evict more
                         dumpVotesToServer(cachedVotes, target, identifier, evictedAlready + evicted, cb);
